@@ -171,7 +171,13 @@ from order_items oi join products p ON oi.product_id = p.product_id
 Group by oi.product_id;
 
 --18. Subquery to Find Products with Low Stock.
-SELECT * FROM products WHERE stockQuantity < (SELECT AVG(stockQuantity) FROM products)
+--i)
+Select * from products where stockQuantity < (Select AVG(stockQuantity) from products)
+--ii)
+Select * from products where stockQuantity = (Select MIN(stockQuantity) from products)
 
 --19. . Subquery to Find Customers Who Placed High-Value Orders.
+--i)
 Select * from customers where customer_id in (Select customer_id from orders Group by customer_id having(Sum(total_price)) > (Select AVG(total_price) from orders))
+--ii)
+Select *from customers where customer_id in (Select customer_id from orders where total_price = (select max(total_price) as Maximum_value from orders))
