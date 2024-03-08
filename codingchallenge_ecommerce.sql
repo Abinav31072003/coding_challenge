@@ -152,7 +152,7 @@ Select * from products where stockQuantity > 5
 --5. Retrieve Orders with Total Amount Between $500 and $1000.
 Select * from orders where total_price between 500 and 1000
 
---6. Find Products which name end with letter ‘r’.
+--6. Find Products which name end with letter â€˜râ€™.
 Select * from products where name like '%r'
 
 --7. Retrieve Cart Items for Customer 5.
@@ -166,7 +166,30 @@ Select c.name, o.order_date from customers c join orders o on c.customer_id = o.
 Select * from products  
 Select category, min(stockQuantity) as Minimum_Stock from products group by category
 
---10. Calculate the Total Amount Spent by Each Customer.Select c.name, o.total_price from customers c join orders o on c.customer_id = o.customer_id--11.  Find the Average Order Amount for Each CustomerSelect c.name, Avg(o.total_price) as Average_price from customers c join orders o on c.customer_id = o.customer_id group by c.name--12. Count the Number of Orders Placed by Each Customer.Select c.name, count(oi.order_item_id) from customers c join orders o  on c.customer_id = o.customer_id left join order_items oi on o.order_id = oi.order_id group by c.name--13. Find the Maximum Order Amount for Each Customer.Select c.name, max(o.total_price) from customers c join orders o on c.customer_id = o.customer_id group by c.name--14. Get Customers Who Placed Orders Totaling Over $1000. Select c.name, o.total_price from customers c join orders o on c.customer_id = o.customer_id where o.total_price > 1000 --15. Subquery to Find Products Not in the Cart. Select * from products where product_id not in (Select product_id from cart) --16. Subquery to Find Customers Who Haven't Placed Orders Insert into customers values ('Giridharan','giri@example.com','123 Laporte St') Select * from customers where customer_id not in (Select distinct customer_id from orders)--17. Subquery to Calculate the Percentage of Total Revenue for a Product. Select oi.product_id, (SUM(oi.quantity * p.price) / (SELECT SUM(total_price) FROM orders)) * 100 AS revenue_percentage
+--10. Calculate the Total Amount Spent by Each Customer.
+Select c.name, o.total_price from customers c join orders o on c.customer_id = o.customer_id
+
+--11.  Find the Average Order Amount for Each Customer
+Select c.name, Avg(o.total_price) as Average_price from customers c join orders o on c.customer_id = o.customer_id group by c.name
+
+--12. Count the Number of Orders Placed by Each Customer.
+Select c.name, count(oi.order_item_id) from customers c join orders o  on c.customer_id = o.customer_id left join order_items oi on o.order_id = oi.order_id group by c.name
+
+--13. Find the Maximum Order Amount for Each Customer.
+Select c.name, max(o.total_price) from customers c join orders o on c.customer_id = o.customer_id group by c.name
+
+--14. Get Customers Who Placed Orders Totaling Over $1000.
+ Select c.name, o.total_price from customers c join orders o on c.customer_id = o.customer_id where o.total_price > 1000
+
+ --15. Subquery to Find Products Not in the Cart.
+ Select * from products where product_id not in (Select product_id from cart)
+
+ --16. Subquery to Find Customers Who Haven't Placed Orders
+ Insert into customers values ('Giridharan','giri@example.com','123 Laporte St')
+ Select * from customers where customer_id not in (Select distinct customer_id from orders)
+
+--17. Subquery to Calculate the Percentage of Total Revenue for a Product.
+ Select oi.product_id, (SUM(oi.quantity * p.price) / (SELECT SUM(total_price) FROM orders)) * 100 AS revenue_percentage
 from order_items oi join products p ON oi.product_id = p.product_id
 Group by oi.product_id;
 
